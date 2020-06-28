@@ -1,0 +1,25 @@
+router portfreigabe												Port 1357 auf 1357
+																Port 22 auf 1356
+lüfter an pin21 + 3.3V, GND
+temp an pin 4 + Widerstand 4.7k an 3.3V + VCC, GND
+rtcUhr an pin 2 SDA, pin3 SCL + VCC, GND
+
+passwd
+
+sudo nano /etc/ssh/sshd_config									Port 22 ändern				1357
+Bei Port 1357 ggf. die "#" entfernen
+.ssh Ordner in home-Verzeichnis vom Benutzer packen. (authorized_keys)
+
+sudo apt-get update
+sudo apt-get upgrade
+
+noip2 einrichten
+
+sudo apt-get autoclean
+sudo apt-get autoremove
+
+/etc/sleep 15 && /home/development/program &
+
+copy program.c
+copy temp.sh
+copy email.py
