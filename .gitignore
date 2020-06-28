@@ -1,2 +1,6 @@
 Email/config.ini
+Strom/stromzaehler
+Temperatur/*_Temp/
+*.pyc
 *.wav
+*.o

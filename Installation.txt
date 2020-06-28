@@ -18,7 +18,7 @@ noip2 einrichten
 sudo apt-get autoclean
 sudo apt-get autoremove
 
-/etc/sleep 15 && /home/development/program &
+/etc/sleep 15 && /home/development/Strom/stromzaehler &
 
 copy program.c
 copy temp.sh
