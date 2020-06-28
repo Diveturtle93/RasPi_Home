@@ -12,14 +12,17 @@ Bei Port 1357 ggf. die "#" entfernen
 
 sudo apt-get update
 sudo apt-get upgrade
-
-noip2 einrichten
-
 sudo apt-get autoclean
 sudo apt-get autoremove
 
 /etc/sleep 15 && /home/development/Strom/stromzaehler &
 
-copy program.c
 copy temp.sh
-copy email.py
+copy mail.py
+
+sudo nano crontab
+
+12	7	*	*	5	
+12	7	*	*	7	sudo /home/development/Email/mail.py
+*	0, 30	*	*	*	sudo /home/development/Temperatur/temp.sh
+0	15	1	*	*	sudo reboot
