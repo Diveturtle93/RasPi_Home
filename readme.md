@@ -1,0 +1,6 @@
+Raspberry Pi Projekt
+
+Hausüberwachung
+Temperaturmessung
+Emailversand
+Stromzähler auslesen
