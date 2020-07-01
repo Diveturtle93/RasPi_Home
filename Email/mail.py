@@ -20,10 +20,10 @@ timestr = time.strftime('%Y%m')
 if (sys.argv[1] == "-w"):
 	notifier.send()
 elif (sys.argv[1] == "-t"):
-	notifier.send_text('/home/development/Temp/'+timeyear+'_Temp/'+timestr+'_Sensor_A-E.txt')
+	notifier.send_text('../Temperatur/'+timeyear+'_Temp/'+timestr+'_Sensor_A-E.txt')
 elif (sys.argv[1] == "-b"):
 	notifier.send_image('abc.png')
 elif (sys.argv[1] == "-m"):
-	notifier.send_text('/home/development/Temp/'+timeyear+'_Temp/'+timeyear+sys.argv[2]+'_Sensor_A-E.txt')
+	notifier.send_text('../Temperatur/'+timeyear+'_Temp/'+timeyear+sys.argv[2]+'_Sensor_A-E.txt')
 else:
 	fprintf("Falsche Argumente")

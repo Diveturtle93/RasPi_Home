@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>							// für strcmp zum vergleichen
-#include <time.h>							// für die Uhrzeit
+#include <string.h>											// für strcmp zum vergleichen
+#include <time.h>											// für die Uhrzeit
 #include <wiringPi.h>
 
 int main() {
@@ -12,7 +12,7 @@ int main() {
 	char month[12], zeit[12], date[12]="0:00:00:00";		// Puffer um das Datum zwischen zu speichern
 	fp = fopen("log_file.txt","a");
 
-	r = system("python /home/development/mail.py -w");		// Email senden nach reboot
+	r = system("python /home/development/Email/mail.py -w");// Email senden nach reboot
 	fprintf(fp, "Error Code %d", r);
 
 	while (1)
@@ -24,7 +24,7 @@ int main() {
 
 		if (strcmp(month, "0:00:00:00") == 0)				// Damit nach einem Monat ein Reboot durchgeführt wird
 		{
-			r = system("/home/development/temp.sh");		// Temperatur messen
+			r = system("/home/development/Temperatur/temp.sh");			// Temperatur messen
 			fprintf(fp, "Monatswechsel erfasst %d", r);
 			system("reboot");								// Reboot ausführen
 		}
@@ -35,7 +35,7 @@ int main() {
 			system("/home/development/temp.sh");			// Temperatur messen
 			fprintf(fp, "Wochenwechsel erfasst");
 			//system("hwclock -s");							// Einmal wöchentlich die Uhrzeit neu stellen
-			r = system("python /home/development/mail.py -t");	// Email senden, txt-Datei schicken
+			r = system("python /home/development/Email/mail.py -t");	// Email senden, txt-Datei schicken
 			fprintf(fp, "Email senden %d", r);
 		}
 
@@ -44,7 +44,7 @@ int main() {
 			fprintf(fp, "Temperatur erfasst");
 			myTm->tm_min = myTm->tm_min+30;					// Für die nächste Zeit auf die Min 30 draufrechnen
 			strftime(date, 12, "%w:%H:%M:%S\0", myTm);		// umwandeln und in Date speichern
-			system("/home/development/temp.sh");			// Temperatur messen
+			system("/home/development/Temperatur/temp.sh");	// Temperatur messen
 		}
 	}
 }

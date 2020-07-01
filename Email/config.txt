@@ -1,0 +1,11 @@
+[Server]
+Serveradresse = 
+User = 
+Empfaenger = 
+Passwd = 
+
+[Raspi]
+Raspi_Name = 
+
+[Systeminfo]
+Version = 1.0

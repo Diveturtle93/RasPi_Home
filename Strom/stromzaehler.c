@@ -18,13 +18,27 @@
 #define	Zaehler3	2		// Pin 13
 
 // Globale Variable initialisieren
-static volatile int Counter = 0 ;
+static volatile int Counter1 = 0;
+static volatile int Counter2 = 0;
+static volatile int Counter3 = 0;
 
 
 // Interrupt Routine fuer Stromzaehlerimpulse
-void Zahler (void)
+void ZahlerInt1 (void)
 {
-	++Counter ;
+	++Counter1;
+}
+
+// Interrupt Routine fuer Stromzaehlerimpulse
+void ZahlerInt2 (void)
+{
+	++Counter2;
+}
+
+// Interrupt Routine fuer Stromzaehlerimpulse
+void ZahlerInt3 (void)
+{
+	++Counter3;
 }
 
 // Main Routine
@@ -32,7 +46,8 @@ int main (void)
 {
 	// Systemvariablen
 	FILE * datei;
-	int count = 0, tmp = 0;
+	int count1 = 0, count2 = 0, count3 = 0;
+	int tmp1 = 0, tmp2 = 0, tmp3 = 0;
 	time_t timenow;
 	struct tm *myTime;
 	char date[20];
@@ -58,13 +73,35 @@ int main (void)
 		return 1 ;
 	}
 
-	//printf("Definiere Interrupt\n");
+	//printf("Definiere Interrupt 1\n");
 	//fflush(stdout);
-	if (wiringPiISR(Zaehler3, INT_EDGE_FALLING, &Zahler) < 0)
+	if (wiringPiISR(Zaehler1, INT_EDGE_FALLING, &ZahlerInt1) < 0)
 	{
 		datei = fopen ("Strom.txt","a");
 		fprintf(datei, "%s\n", date);
-		fprintf(datei, "Interrupt konnte nicht initialisiert werden: %s!\n", strerror(errno));
+		fprintf(datei, "Interrupt Zaehler1 konnte nicht initialisiert werden: %s!\n", strerror(errno));
+		fclose(datei);
+		return 1 ;
+	}
+	
+	//printf("Definiere Interrupt 2\n");
+	//fflush(stdout);
+	if (wiringPiISR(Zaehler2, INT_EDGE_FALLING, &ZahlerInt2) < 0)
+	{
+		datei = fopen ("Strom.txt","a");
+		fprintf(datei, "%s\n", date);
+		fprintf(datei, "Interrupt Zaehler2 konnte nicht initialisiert werden: %s!\n", strerror(errno));
+		fclose(datei);
+		return 1 ;
+	}
+	
+	//printf("Definiere Interrupt 3\n");
+	//fflush(stdout);
+	if (wiringPiISR(Zaehler3, INT_EDGE_FALLING, &ZahlerInt3) < 0)
+	{
+		datei = fopen ("Strom.txt","a");
+		fprintf(datei, "%s\n", date);
+		fprintf(datei, "Interrupt Zaehler3 konnte nicht initialisiert werden: %s!\n", strerror(errno));
 		fclose(datei);
 		return 1 ;
 	}
@@ -76,7 +113,7 @@ int main (void)
 		//printf ("Waiting ... ");
 		//fflush (stdout);
 
-		while (count == Counter)
+		while((count1 == Counter1) && (count2 == Counter2) && (count3 == Counter3))
 		{
 			delay(100);
 		}
@@ -87,11 +124,20 @@ int main (void)
 		myTime = localtime(&timenow);
 		strftime(date, 20, "%Y.%m.%d-%H:%M:%S", myTime);
 
-		tmp = counter - count;
-		datei = fopen("Strom.txt","a") ;
-		fprintf (datei, "%d Wh, %d Wh; %s\n", Counter, tmp, date);
+		tm1 = counter1 - count1;
+		tm2 = counter2 - count2;
+		tm3 = counter3 - count3;
+		
+		datei = fopen("Strom.txt","a");
+		fprintf (datei, "%d Wh, %d Wh, ", Counter1, tmp1);
+		fprintf (datei, "%d Wh, %d Wh, ", Counter2, tmp2);
+		fprintf (datei, "%d Wh, %d Wh; ", Counter3, tmp3);
+		fprintf (datei, "%s\n", date);
 		fclose (datei);
-		count = Counter;
+		
+		count1 = Counter1;
+		count2 = Counter2;
+		count3 = Counter3;
 	}
 	return 0;
 }
