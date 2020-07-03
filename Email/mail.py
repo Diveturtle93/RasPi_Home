@@ -5,7 +5,7 @@ import time
 import ConfigParser
 
 config = ConfigParser.RawConfigParser()
-config.read('config.ini')
+config.read('/home/development/Email/config.ini')
 
 EMAIL_SERVER = config.get('Server', 'Serveradresse')
 EMAIL_USER = config.get('Server', 'User')

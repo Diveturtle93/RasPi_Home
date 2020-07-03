@@ -22,13 +22,13 @@ static volatile int Counter = 0 ;
 
 
 // Interrupt Routine fuer Stromzaehlerimpulse
-void Zahler (void)
+void Zahler(void)
 {
 	++Counter ;
 }
 
 // Main Routine
-int main (void)
+int main(void)
 {
 	// Systemvariablen
 	FILE * datei;
@@ -38,7 +38,7 @@ int main (void)
 	char date[20];
 
 	// Start Programm
-	datei = fopen ("Strom.txt","a");
+	datei = fopen("/home/development/Strom/strom.txt","a");
 	fprintf(datei, "Starte Programm");
 	fclose(datei);
 
@@ -49,9 +49,9 @@ int main (void)
 
 	//printf("Start WiringPI\n");
 	//fflush(stdout);
-	if (wiringPiSetup() < 0)
+	if(wiringPiSetup() < 0)
 	{
-		datei = fopen ("Strom.txt","a");
+		datei = fopen("/home/development/Strom/strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Die Bibliothek WiringPi konnte nicht gestartet werden: %s!\n", strerror(errno));
 		fclose(datei);
@@ -60,9 +60,9 @@ int main (void)
 
 	//printf("Definiere Interrupt\n");
 	//fflush(stdout);
-	if (wiringPiISR(Zaehler3, INT_EDGE_FALLING, &Zahler) < 0)
+	if(wiringPiISR(Zaehler3, INT_EDGE_FALLING, &Zahler) < 0)
 	{
-		datei = fopen ("Strom.txt","a");
+		datei = fopen("/home/development/Strom/strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Interrupt konnte nicht initialisiert werden: %s!\n", strerror(errno));
 		fclose(datei);
@@ -71,12 +71,12 @@ int main (void)
 
 	//printf("For-Schleife startet\n");
 	//fflush(stdout);
-	for (;;)
+	for(;;)
 	{
 		//printf ("Waiting ... ");
 		//fflush (stdout);
 
-		while (count == Counter)
+		while(count == Counter)
 		{
 			delay(100);
 		}
@@ -87,10 +87,10 @@ int main (void)
 		myTime = localtime(&timenow);
 		strftime(date, 20, "%Y.%m.%d-%H:%M:%S", myTime);
 
-		tmp = counter - count;
-		datei = fopen("Strom.txt","a") ;
-		fprintf (datei, "%d Wh, %d Wh; %s\n", Counter, tmp, date);
-		fclose (datei);
+		tmp = Counter - count;
+		datei = fopen("/home/development/Strom/strom.txt","a");
+		fprintf(datei, "%d Wh, %d Wh; %s\n", Counter, tmp, date);
+		fclose(datei);
 		count = Counter;
 	}
 	return 0;
