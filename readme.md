@@ -25,3 +25,6 @@ Auswertung.
 Für den Emailversand muss die Datei config.txt in config.ini umbenant werden. Zusätzlich müssen
 die Fehlenden Einträge unter der Kategorie Server ergänzt und vervollständigt werden.
 Ansonsten ist ein korrekt arbeitender Emailversand nicht gewärleistet.
+
+Bei mehreren Emailemfängern können diese durch Komma getrennt, eingetragen werden. Dabei darf
+kein Zeilenumbruch getätigt werden.

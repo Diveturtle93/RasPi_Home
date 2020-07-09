@@ -17,12 +17,13 @@ sudo apt-get autoremove
 
 /etc/sleep 15 && /home/development/Strom/stromzaehler &
 
-copy temp.sh
-copy mail.py
+Umbenennnen der config.txt in config.ini
+
+Ändere Einstellungen in der config.ini
 
 sudo nano crontab
 
 12	7	*	*	5	
 12	7	*	*	7	sudo /home/development/Email/mail.py
 *	0, 30	*	*	*	sudo /home/development/Temperatur/temp.sh
-0	15	1	*	*	sudo reboot
+0	10	1	*	*	sudo reboot

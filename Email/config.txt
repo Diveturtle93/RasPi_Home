@@ -1,11 +1,11 @@
 [Server]
-Serveradresse = 
-User = 
-Empfaenger = 
-Passwd = 
+Serveradresse = smtp@Email.de:25
+User = User@Email.de
+Empfaenger = Empfaenger@Email.de
+Passwd = xxx
 
 [Raspi]
-Raspi_Name = 
+Raspi_Name = "Raspi_Error"
 
 [Systeminfo]
 Version = 1.0

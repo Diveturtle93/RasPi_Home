@@ -2,6 +2,15 @@ import smtplib
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import ConfigParser
+import git
+
+repo = git.Repo(search_parent_directories=True)
+sha = repo.head.object.hexsha
+
+config = ConfigParser.RawConfigParser()
+config.read('/home/development/Email/config.ini')
+RASPI_NAME = config.get('Raspi', 'Raspi_Name')
 
 class EmailNotification:
 	def __init__(self, server, user, empfaenger, passwd):
@@ -21,24 +30,24 @@ class EmailNotification:
 		
 	def send(self):
 		msg = MIMEMultipart()
-		msg = self.__betreff('[Raspi] Reboot')
+		msg = self.__betreff('[%s] Reboot System' % RASPI_NAME)
 		msg.preamble = self.subject
-		msg.attach(MIMEText('System wurde erfolgreich neu gestartet.'))
+		msg.attach(MIMEText('System wurde erfolgreich neu gestartet.\n\n%s' % sha))
 		self.__send_email(msg)
 		
 	def send_text(self, txt_file):
 		msg = MIMEMultipart()
-		msg = self.__betreff('[Raspi] Temperatur')
+		msg = self.__betreff('[%s] Temperatur' % RASPI_NAME)
 		msg.preamble = self.subject
-		msg.attach(MIMEText('Die woechentliche Email mit der Temperatur'))
+		msg.attach(MIMEText('Die woechentliche Email mit der Temperatur.\n\n%s' % sha))
 		msg.attach(self.__read_txt(txt_file))
 		self.__send_email(msg)
 
 	def send_image(self, image_file):
 		msg = MIMEMultipart()
-		msg = self.__betreff('[Raspi] Alarmanlage')
+		msg = self.__betreff('[%s] Alarmanlage' % RASPI_NAME)
 		msg.preamble = self.subject
-		msg.attach(MIMEText('Alarm, Alarm'))
+		msg.attach(MIMEText('Alarm, Alarm\n\n%s' % sha))
 		msg.attach(self.__read_image(image_file))
 		self.__send_email(msg)
 

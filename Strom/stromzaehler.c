@@ -24,25 +24,25 @@ static volatile int Counter3 = 0;
 
 
 // Interrupt Routine fuer Stromzaehlerimpulse
-void ZahlerInt1 (void)
+void ZahlerInt1(void)
 {
 	++Counter1;
 }
 
 // Interrupt Routine fuer Stromzaehlerimpulse
-void ZahlerInt2 (void)
+void ZahlerInt2(void)
 {
 	++Counter2;
 }
 
 // Interrupt Routine fuer Stromzaehlerimpulse
-void ZahlerInt3 (void)
+void ZahlerInt3(void)
 {
 	++Counter3;
 }
 
 // Main Routine
-int main (void)
+int main(void)
 {
 	// Systemvariablen
 	FILE * datei;
@@ -53,8 +53,8 @@ int main (void)
 	char date[20];
 
 	// Start Programm
-	datei = fopen ("Strom.txt","a");
-	fprintf(datei, "Starte Programm");
+	datei = fopen("strom.txt","a");
+	fprintf(datei, "Starte Programm\n");
 	fclose(datei);
 
 	// Zeit aufnehmen
@@ -64,51 +64,51 @@ int main (void)
 
 	//printf("Start WiringPI\n");
 	//fflush(stdout);
-	if (wiringPiSetup() < 0)
+	if(wiringPiSetup() < 0)
 	{
-		datei = fopen ("Strom.txt","a");
+		datei = fopen("strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Die Bibliothek WiringPi konnte nicht gestartet werden: %s!\n", strerror(errno));
 		fclose(datei);
-		return 1 ;
+		return 1;
 	}
 
 	//printf("Definiere Interrupt 1\n");
 	//fflush(stdout);
-	if (wiringPiISR(Zaehler1, INT_EDGE_FALLING, &ZahlerInt1) < 0)
+	if(wiringPiISR(Zaehler1, INT_EDGE_FALLING, &ZahlerInt1) < 0)
 	{
-		datei = fopen ("Strom.txt","a");
+		datei = fopen("strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Interrupt Zaehler1 konnte nicht initialisiert werden: %s!\n", strerror(errno));
 		fclose(datei);
-		return 1 ;
+		return 1;
 	}
 	
 	//printf("Definiere Interrupt 2\n");
 	//fflush(stdout);
-	if (wiringPiISR(Zaehler2, INT_EDGE_FALLING, &ZahlerInt2) < 0)
+	if(wiringPiISR(Zaehler2, INT_EDGE_FALLING, &ZahlerInt2) < 0)
 	{
-		datei = fopen ("Strom.txt","a");
+		datei = fopen("strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Interrupt Zaehler2 konnte nicht initialisiert werden: %s!\n", strerror(errno));
 		fclose(datei);
-		return 1 ;
+		return 1;
 	}
 	
 	//printf("Definiere Interrupt 3\n");
 	//fflush(stdout);
-	if (wiringPiISR(Zaehler3, INT_EDGE_FALLING, &ZahlerInt3) < 0)
+	if(wiringPiISR(Zaehler3, INT_EDGE_FALLING, &ZahlerInt3) < 0)
 	{
-		datei = fopen ("Strom.txt","a");
+		datei = fopen("Strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Interrupt Zaehler3 konnte nicht initialisiert werden: %s!\n", strerror(errno));
 		fclose(datei);
-		return 1 ;
+		return 1;
 	}
 
 	//printf("For-Schleife startet\n");
 	//fflush(stdout);
-	for (;;)
+	for(;;)
 	{
 		//printf ("Waiting ... ");
 		//fflush (stdout);
@@ -124,16 +124,16 @@ int main (void)
 		myTime = localtime(&timenow);
 		strftime(date, 20, "%Y.%m.%d-%H:%M:%S", myTime);
 
-		tm1 = counter1 - count1;
-		tm2 = counter2 - count2;
-		tm3 = counter3 - count3;
+		tm1 = Counter1 - count1;
+		tm2 = Counter2 - count2;
+		tm3 = Counter3 - count3;
 		
-		datei = fopen("Strom.txt","a");
-		fprintf (datei, "%d Wh, %d Wh, ", Counter1, tmp1);
-		fprintf (datei, "%d Wh, %d Wh, ", Counter2, tmp2);
-		fprintf (datei, "%d Wh, %d Wh; ", Counter3, tmp3);
-		fprintf (datei, "%s\n", date);
-		fclose (datei);
+		datei = fopen("strom.txt","a");
+		fprintf(datei, "%d Wh, %d Wh, ", Counter1, tmp1);
+		fprintf(datei, "%d Wh, %d Wh, ", Counter2, tmp2);
+		fprintf(datei, "%d Wh, %d Wh; ", Counter3, tmp3);
+		fprintf(datei, "%s\n", date);
+		fclose(datei);
 		
 		count1 = Counter1;
 		count2 = Counter2;

@@ -10,10 +10,12 @@ int main() {
  	time_t now;												// Variable now definieren
 	struct tm *myTm;										// Kalender Struktur laden
 	char month[12], zeit[12], date[12]="0:00:00:00";		// Puffer um das Datum zwischen zu speichern
-	fp = fopen("log_file.txt","a");
-
+	
+	fp = fopen("log_file.txt","a");							// Datei öffnen
 	r = system("python /home/development/Email/mail.py -w");// Email senden nach reboot
-	fprintf(fp, "Error Code %d", r);
+	
+	fprintf(fp, "Error Code %d\n", r);						// Schreibe in Datei
+	fclose(fp);												// Datei schließen
 
 	while (1)
 	{
@@ -24,24 +26,36 @@ int main() {
 
 		if (strcmp(month, "0:00:00:00") == 0)				// Damit nach einem Monat ein Reboot durchgeführt wird
 		{
+			fp = fopen("log_file.txt","a");					// Datei öffnen
 			r = system("/home/development/Temperatur/temp.sh");			// Temperatur messen
-			fprintf(fp, "Monatswechsel erfasst %d", r);
+			
+			fprintf(fp, "Monatswechsel erfasst %d\n", r);	// Schreibe in Datei
+			fclose(fp);										// Datei schließen
+			
 			system("reboot");								// Reboot ausführen
 		}
 
 		if (strcmp(zeit, "0:00:00:00") == 0)				// Damit nach einer Woche das Programm weiterzählt wieder bei null
 		{
+			fp = fopen("log_file.txt","a");					// Datei öffnen
 			date[12] = zeit[12];							// Date gleich Buffer
+			
 			system("/home/development/temp.sh");			// Temperatur messen
-			fprintf(fp, "Wochenwechsel erfasst");
+			fprintf(fp, "Wochenwechsel erfasst\n");			// Schreibe in Datei
+			
 			//system("hwclock -s");							// Einmal wöchentlich die Uhrzeit neu stellen
 			r = system("python /home/development/Email/mail.py -t");	// Email senden, txt-Datei schicken
-			fprintf(fp, "Email senden %d", r);
+			
+			fprintf(fp, "Email senden %d\n", r);			// Schreibe in Datei
+			fclose(fp);										// Datei schließen
 		}
 
 		if (strcmp(zeit, date) == 1)						// Abfrage ob Zeit von 30 Min überschritten wurden, Buffer > Date == 1, Buffer < Date == -1, gleich == 0
 		{
-			fprintf(fp, "Temperatur erfasst");
+			fp = fopen("log_file.txt","a");					// Datei öffnen
+			fprintf(fp, "Temperatur erfasst\n");			// Schreibe in Datei
+			fclose(fp);										// Datei schließen
+			
 			myTm->tm_min = myTm->tm_min+30;					// Für die nächste Zeit auf die Min 30 draufrechnen
 			strftime(date, 12, "%w:%H:%M:%S\0", myTm);		// umwandeln und in Date speichern
 			system("/home/development/Temperatur/temp.sh");	// Temperatur messen

@@ -5,7 +5,7 @@ import time
 import ConfigParser
 
 config = ConfigParser.RawConfigParser()
-config.read('config.ini')
+config.read('/home/development/Email/config.ini')
 
 EMAIL_SERVER = config.get('Server', 'Serveradresse')
 EMAIL_USER = config.get('Server', 'User')
@@ -20,10 +20,11 @@ timestr = time.strftime('%Y%m')
 if (sys.argv[1] == "-w"):
 	notifier.send()
 elif (sys.argv[1] == "-t"):
-	notifier.send_text('../Temperatur/'+timeyear+'_Temp/'+timestr+'_Sensor_A-E.txt')
+	notifier.send_text('/home/development/Temperatur/'+timeyear+'_Temp/'+timestr+'_Sensor_A-E.txt')
 elif (sys.argv[1] == "-b"):
 	notifier.send_image('abc.png')
 elif (sys.argv[1] == "-m"):
-	notifier.send_text('../Temperatur/'+timeyear+'_Temp/'+timeyear+sys.argv[2]+'_Sensor_A-E.txt')
+	notifier.send_text('/home/development/Temperatur/'+timeyear+'_Temp/'+timeyear+sys.argv[2]+'_Sensor_A-E.txt')
 else:
-	fprintf("Falsche Argumente")
+	print("Falsche Argumente")
+	print("Mögliche Argumente: -w; -t; -b; -m")
