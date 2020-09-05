@@ -53,8 +53,8 @@ int main(void)
 	char date[20];
 
 	// Start Programm
-	datei = fopen("strom.txt","a");
-	fprintf(datei, "Starte Programm\n");
+	datei = fopen("/home/development/Strom/strom.txt","a");
+	fprintf(datei, "Starte Programm");
 	fclose(datei);
 
 	// Zeit aufnehmen
@@ -66,7 +66,7 @@ int main(void)
 	//fflush(stdout);
 	if(wiringPiSetup() < 0)
 	{
-		datei = fopen("strom.txt","a");
+		datei = fopen("/home/development/Strom/strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Die Bibliothek WiringPi konnte nicht gestartet werden: %s!\n", strerror(errno));
 		fclose(datei);
@@ -97,9 +97,9 @@ int main(void)
 	
 	//printf("Definiere Interrupt 3\n");
 	//fflush(stdout);
-	if(wiringPiISR(Zaehler3, INT_EDGE_FALLING, &ZahlerInt3) < 0)
+	if(wiringPiISR(Zaehler3, INT_EDGE_FALLING, &Zahler) < 0)
 	{
-		datei = fopen("Strom.txt","a");
+		datei = fopen("/home/development/Strom/strom.txt","a");
 		fprintf(datei, "%s\n", date);
 		fprintf(datei, "Interrupt Zaehler3 konnte nicht initialisiert werden: %s!\n", strerror(errno));
 		fclose(datei);
@@ -128,7 +128,7 @@ int main(void)
 		tm2 = Counter2 - count2;
 		tm3 = Counter3 - count3;
 		
-		datei = fopen("strom.txt","a");
+		datei = fopen("/home/development/Strom/strom.txt","a");
 		fprintf(datei, "%d Wh, %d Wh, ", Counter1, tmp1);
 		fprintf(datei, "%d Wh, %d Wh, ", Counter2, tmp2);
 		fprintf(datei, "%d Wh, %d Wh; ", Counter3, tmp3);
