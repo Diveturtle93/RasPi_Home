@@ -3,10 +3,11 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import ConfigParser
-import git
+#import git
 
-repo = git.Repo(search_parent_directories=True)
-sha = repo.head.object.hexsha
+#repo = git.Repo(search_parent_directories = True)
+#sha = repo.head.object.hexsha
+sha = 'dd9b813e7c2df4d8eadde572707205c83f30f2ff'
 
 config = ConfigParser.RawConfigParser()
 config.read('/home/development/Email/config.ini')

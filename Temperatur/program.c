@@ -40,7 +40,7 @@ int main() {
 			fp = fopen("log_file.txt","a");					// Datei öffnen
 			date[12] = zeit[12];							// Date gleich Buffer
 			
-			system("/home/development/temp.sh");			// Temperatur messen
+			system("/home/development/Temperatur/temp.sh");	// Temperatur messen
 			fprintf(fp, "Wochenwechsel erfasst\n");			// Schreibe in Datei
 			
 			//system("hwclock -s");							// Einmal wöchentlich die Uhrzeit neu stellen
