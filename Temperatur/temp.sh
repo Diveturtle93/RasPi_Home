@@ -32,7 +32,7 @@ temp4=`echo "scale=2; "\`echo ${tempread4##*=}\`" / 1000" | bc`
 #
 #Ausgabe (>> bedeutet speicher in der Datei speicherTemp oder anderen Pfad)
 #echo "gemessene Temperatur beträgt" $temp "°C" >> /home/pi/speicherTemp #HP# "c" oder "-n" (eintragen =verhindert das der nächste Wert in eine Neue Zeile geschrieben wird.
-
+#
 #------------
 echo -n $temp0"; " >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%Y%m")_Sensor_A-E.txt #A
 echo -n $temp1"; " >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%Y%m")_Sensor_A-E.txt #B
@@ -44,13 +44,12 @@ echo -n $temp4"; " >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%
 #echo -n $temp7"; " >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%Y%m")_Sensor_A-E.txt #H
 #echo -n $temp8"; " >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%Y%m")_Sensor_A-E.txt #I
 #echo -n $temp9"; " >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%Y%m")_Sensor_A-E.txt #J
-
+#
 #------------
 date +"%Y/%m/%d %H:%M" >> /home/development/Temperatur/$(date +"%Y")_Temp/$(date +"%Y%m")_Sensor_A-E.txt
 #Warteintervall z.b. 10s = 10 sekunden; 5m = 5 minuten
 #sleep 30m
-
+#
 #done
-
+#
 #Adr. http://www.tippscout.de/bash-echo-zeilenumbruch_tipp_5937.html
-
