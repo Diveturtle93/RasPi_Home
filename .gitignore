@@ -2,6 +2,7 @@ Email/config.ini
 Strom/stromzaehler
 Strom/strom.txt
 Temperatur/*_Temp/
+Data/
 *.pyc
 *.wav
 *.o
